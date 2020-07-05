@@ -14,12 +14,19 @@ export default class GameControllerBehaviour extends cc.Component {
 
     isStartEcs: boolean = false;
 
+    @property
+    isDeubgEcs: boolean = true;
+
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
         
         Global.context = this._context = new ecs.Context(EntityX, ecs.getComponentConstructors());
         this._rootSystem = new RootSystem(this._context);
         this._rootSystem.init();
+
+        if(this.isDeubgEcs) {
+            this._rootSystem.initDebug();
+        }
 
         Global.gameOverEntity = this._context.createEntity();
 
@@ -38,7 +45,12 @@ export default class GameControllerBehaviour extends cc.Component {
 
     update(dt: number) {
         if(this.isStartEcs) {
-            this._rootSystem.execute(dt);
+            if(this.isDeubgEcs) {
+                this._rootSystem.debugExecute(dt);
+            }
+            else {
+                this._rootSystem.execute(dt);
+            }
         }
     }
 }

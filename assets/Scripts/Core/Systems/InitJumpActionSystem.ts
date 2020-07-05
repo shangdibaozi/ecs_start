@@ -2,7 +2,6 @@ import { ecs } from "../../Libs/ECS";
 import { EntityX } from "../EntityX";
 import { JumpComponent } from "../Components/JumpComponent";
 import { NodeComponent } from "../Components/NodeComponent";
-import { SpawnStarComponent } from "../Components/SpawnStarComponent";
 
 export class InitJumpActionSystem extends ecs.ReactiveSystem<EntityX> {
 
