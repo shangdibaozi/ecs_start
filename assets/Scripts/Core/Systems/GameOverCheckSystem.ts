@@ -14,12 +14,12 @@ export class GameOverCheckSystem extends ecs.ExecuteSystem<EntityX> {
     playerGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.starGroup = this.context.createGroup(ecs.Matcher.newInst.allOf(StarComponent, NodeComponent));
-        this.playerGroup = this.context.createGroup(ecs.Matcher.newInst.allOf(NodeComponent, JumpComponent, AccSwitchComponent));
+        this.starGroup = ecs.context.createGroup(ecs.Matcher.allOf(StarComponent, NodeComponent));
+        this.playerGroup = ecs.context.createGroup(ecs.Matcher.allOf(NodeComponent, JumpComponent, AccSwitchComponent));
     }
 
     filter(): ecs.Matcher {
-        return ecs.Matcher.newInst.onlyOf(GameOverCountdownComponent);
+        return ecs.Matcher.onlyOf(GameOverCountdownComponent);
     }
 
     update(entities: EntityX[]): void {
@@ -32,10 +32,10 @@ export class GameOverCheckSystem extends ecs.ExecuteSystem<EntityX> {
             // 回收星星节点
             for(let e of this.starGroup.matchEntities) {
                 Global.starNodePool.put(e.Node.node);
-                e.setDestroy();
+                e.destroy()
             }
 
-            entities[0].removeComponent(GameOverCountdownComponent);
+            entities[0].destroy();
 
             Global.uiEvent.emit(UI_EVENT.GAME_OVER);
         }

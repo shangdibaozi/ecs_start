@@ -5,7 +5,7 @@ import { AccSwitchComponent } from "../Components/AccSwitchComponent";
 
 export class XMoveSystem extends ecs.ExecuteSystem<EntityX> {
     filter(): ecs.Matcher {
-        return ecs.Matcher.newInst.allOf(XSpeedComponent, AccSwitchComponent);
+        return ecs.Matcher.allOf(XSpeedComponent, AccSwitchComponent);
     }
     update(entities: EntityX[]): void {
         

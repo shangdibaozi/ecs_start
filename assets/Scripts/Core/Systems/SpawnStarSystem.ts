@@ -8,16 +8,16 @@ import { StarComponent } from "../Components/StarComponent";
 import { GameOverCountdownComponent } from "../Components/GameOverCountdownComponent";
 
 
-export class SpawnStarSystem extends ecs.ReactiveSystem<EntityX> {
+export class SpawnStarSystem extends ecs.AutoDestroyEntityReactiveSystem<EntityX> {
 
     playerGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.playerGroup = this.context.createGroup(ecs.Matcher.newInst.allOf(NodeComponent, JumpComponent));
+        this.playerGroup = ecs.context.createGroup(ecs.Matcher.allOf(NodeComponent, JumpComponent));
     }
 
     filter(): ecs.Matcher {
-        return ecs.Matcher.newInst.allOf(SpawnStarComponent);
+        return ecs.Matcher.allOf(SpawnStarComponent);
     }
 
     update(entities: EntityX[]): void {
@@ -26,19 +26,15 @@ export class SpawnStarSystem extends ecs.ReactiveSystem<EntityX> {
             newStar.parent = Global.starLayer;
             newStar.setPosition(this.getNewStarPosition(this.playerGroup.entity));
 
-            let starEntity = this.context.createEntity();
-            starEntity.addComponent(StarComponent);
-            starEntity.addComponent(NodeComponent).node = newStar;
-
-            if(!Global.gameOverEntity.hasComponent(GameOverCountdownComponent)) {
-                Global.gameOverEntity.addComponent(GameOverCountdownComponent);
-            }
+            let starEntity = ecs.context.createEntity();
+            starEntity.add(StarComponent);
+            starEntity.add(NodeComponent).node = newStar;
+            
+            let gameOverComp = ecs.getSinglton(GameOverCountdownComponent);
 
             // 重置星星消失计时器
-            Global.gameOverEntity.GameOverCountdown.timer = 0;
-            Global.gameOverEntity.GameOverCountdown.starDuration = Math.random() * 4 + 2;
-
-            e.setDestroy();
+            gameOverComp.timer = 0;
+            gameOverComp.starDuration = Math.random() * 4 + 2;
         }
     }
 

@@ -3,16 +3,16 @@ import { EntityX } from "../EntityX";
 import { KeyEventComponent } from "../Components/KeyEventComponent";
 import { AccSwitchComponent } from "../Components/AccSwitchComponent";
 
-export class KeyEventSystem extends ecs.ReactiveSystem<EntityX> {
+export class KeyEventSystem extends ecs.ExecuteSystem<EntityX> {
 
     playerGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.playerGroup = this.context.createGroup(ecs.Matcher.newInst.allOf(AccSwitchComponent));
+        this.playerGroup = ecs.context.createGroup(ecs.Matcher.allOf(AccSwitchComponent));
     }
 
     filter(): ecs.Matcher {
-        return ecs.Matcher.newInst.allOf(KeyEventComponent);
+        return ecs.Matcher.allOf(KeyEventComponent);
     }
 
     update(entities: EntityX[]): void {
@@ -37,8 +37,6 @@ export class KeyEventSystem extends ecs.ReactiveSystem<EntityX> {
                     }
                     break;
             }
-            
-            e.setDestroy();
         }
     }
 }

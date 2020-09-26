@@ -6,7 +6,7 @@ import { NodeComponent } from "../Components/NodeComponent";
 export class InitJumpActionSystem extends ecs.ReactiveSystem<EntityX> {
 
     filter(): ecs.Matcher {
-        return ecs.Matcher.newInst.allOf(JumpComponent, NodeComponent);
+        return ecs.Matcher.allOf(JumpComponent, NodeComponent);
     }
 
     update(entities: EntityX[]): void {

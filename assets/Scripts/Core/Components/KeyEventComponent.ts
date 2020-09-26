@@ -1,7 +1,7 @@
 import { ecs } from "../../Libs/ECS";
 
 @ecs.register('KeyEvent')
-export class KeyEventComponent extends ecs.IComponent {
+export class KeyEventComponent implements ecs.IComponent {
     isKeyDown: boolean;
     isKeyUp: boolean;
 

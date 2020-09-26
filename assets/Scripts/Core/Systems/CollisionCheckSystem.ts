@@ -12,11 +12,11 @@ export class CollisionCheckSystem extends ecs.ExecuteSystem<EntityX> {
     starGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.starGroup = this.context.createGroup(ecs.Matcher.newInst.allOf(StarComponent, NodeComponent));
+        this.starGroup = ecs.context.createGroup(ecs.Matcher.allOf(StarComponent, NodeComponent));
     }
 
     filter(): ecs.Matcher {
-        return ecs.Matcher.newInst.allOf(NodeComponent, JumpComponent, AccSwitchComponent);
+        return ecs.Matcher.allOf(NodeComponent, JumpComponent, AccSwitchComponent);
     }
 
     update(entities: EntityX[]): void {
@@ -26,12 +26,12 @@ export class CollisionCheckSystem extends ecs.ExecuteSystem<EntityX> {
             let dist = e.Node.node.position.sub(playerNode.position).mag();
             if(dist <= 70) {
 
-                this.context.createEntity().addComponent(SpawnStarComponent);
+                ecs.createEntityWithComp(SpawnStarComponent);
 
                 Global.uiEvent.emit(UI_EVENT.GAIN_SCORE);
 
                 Global.starNodePool.put(e.Node.node);
-                e.setDestroy();
+                e.destroy();
             }
         }
     }

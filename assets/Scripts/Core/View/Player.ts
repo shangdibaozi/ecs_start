@@ -1,4 +1,3 @@
-import { Global } from "../../Global";
 import { NodeComponent } from "../Components/NodeComponent";
 import { AccSwitchComponent } from "../Components/AccSwitchComponent";
 import { JumpComponent } from "../Components/JumpComponent";
@@ -43,11 +42,11 @@ export default class Player extends cc.Component {
     }
 
     initPlayerEntity() {
-        let entity = Global.context.createEntity();
-        entity.addComponent(NodeComponent).node = this.node;
-        let accSwitchComp = entity.addComponent(AccSwitchComponent);
-        let jumpComp = entity.addComponent(JumpComponent);
-        let xSpeedComp = entity.addComponent(XSpeedComponent);
+        let entity = ecs.createEntityWithComps<EntityX>(NodeComponent, AccSwitchComponent, JumpComponent, XSpeedComponent);
+        entity.Node.node = this.node;
+        let accSwitchComp = entity.get(AccSwitchComponent);
+        let jumpComp = entity.get(JumpComponent);
+        let xSpeedComp = entity.get(XSpeedComponent);
 
         accSwitchComp.accLeft = false;
         accSwitchComp.accRight = false;
@@ -64,16 +63,14 @@ export default class Player extends cc.Component {
     }
 
     onKeyDown(event: cc.Event.EventKeyboard) {
-        let e = Global.context.createEntity();
-        let keyComp = e.addComponent(KeyEventComponent);
+        let keyComp = ecs.getSinglton(KeyEventComponent);
         keyComp.isKeyDown = true;
         keyComp.isKeyUp = false;
         keyComp.keyEvent = event;
     }
 
     onKeyUp(event: cc.Event.EventKeyboard) {
-        let e = Global.context.createEntity();
-        let keyComp = e.addComponent(KeyEventComponent);
+        let keyComp = ecs.getSinglton(KeyEventComponent);
         keyComp.isKeyDown = false;
         keyComp.isKeyUp = true;
         keyComp.keyEvent = event;

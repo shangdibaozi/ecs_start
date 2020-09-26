@@ -1,6 +1,7 @@
 import { Global } from "../Global";
 import { UI_EVENT } from "../Constants";
 import { SpawnStarComponent } from "../Core/Components/SpawnStarComponent";
+import { ecs } from "../Libs/ECS";
 
 const {ccclass, property} = cc._decorator;
 
@@ -56,6 +57,6 @@ export default class Game extends cc.Component {
         this.mask.active = false;
         this.playBtn.active = false;
         
-        Global.context.createEntity().addComponent(SpawnStarComponent);
+        ecs.createEntityWithComp(SpawnStarComponent);
     }
 }

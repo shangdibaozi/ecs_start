@@ -17,7 +17,6 @@ class AEntity extends ecs.Entity {
 }
 
 export class EntityX extends AEntity {
-    setDestroy() {
-        this.addComponent(DestroyComponent);
-    }
+    
+    
 }

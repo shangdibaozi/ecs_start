@@ -1,7 +1,7 @@
 import { ecs } from "../../Libs/ECS";
 
 @ecs.register('Jump')
-export class JumpComponent extends ecs.IComponent {
+export class JumpComponent implements ecs.IComponent {
     /**
      * 跳跃高度
      */

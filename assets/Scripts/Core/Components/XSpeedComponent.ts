@@ -1,7 +1,7 @@
 import { ecs } from "../../Libs/ECS";
 
 @ecs.register('XSpeed')
-export class XSpeedComponent extends ecs.IComponent {
+export class XSpeedComponent implements ecs.IComponent {
     /**
      * 最大移动速度
      */
