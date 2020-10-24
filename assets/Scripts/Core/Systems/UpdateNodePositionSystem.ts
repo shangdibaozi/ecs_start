@@ -4,8 +4,8 @@ import { NodeComponent } from "../Components/NodeComponent";
 import { XSpeedComponent } from "../Components/XSpeedComponent";
 
 export class UpdateNodePositionSystem extends ecs.ExecuteSystem<EntityX> {
-    filter(): ecs.Matcher {
-        return ecs.Matcher.allOf(NodeComponent, XSpeedComponent);
+    filter(): ecs.IMatcher {
+        return ecs.allOf(NodeComponent, XSpeedComponent);
     }
     update(entities: EntityX[]): void {
         for(let e of entities) {

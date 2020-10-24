@@ -12,11 +12,11 @@ export class CollisionCheckSystem extends ecs.ExecuteSystem<EntityX> {
     starGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.starGroup = ecs.context.createGroup(ecs.Matcher.allOf(StarComponent, NodeComponent));
+        this.starGroup = ecs.createGroup(ecs.allOf(StarComponent, NodeComponent));
     }
 
-    filter(): ecs.Matcher {
-        return ecs.Matcher.allOf(NodeComponent, JumpComponent, AccSwitchComponent);
+    filter(): ecs.IMatcher {
+        return ecs.allOf(NodeComponent, JumpComponent, AccSwitchComponent);
     }
 
     update(entities: EntityX[]): void {

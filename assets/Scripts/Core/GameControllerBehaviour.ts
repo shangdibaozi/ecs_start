@@ -1,9 +1,7 @@
 import { ecs } from "../Libs/ECS";
-import { EntityX } from "./EntityX";
 import { RootSystem } from "./Systems/RootSystem";
 import { Global } from "../Global";
 import { UI_EVENT } from "../Constants";
-import { GameOverCountdownComponent } from "./Components/GameOverCountdownComponent";
 
 const {ccclass, property} = cc._decorator;
 
@@ -19,7 +17,6 @@ export default class GameControllerBehaviour extends cc.Component {
 
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
-        ecs.initContext();
         
         this._rootSystem = new RootSystem();
         this._rootSystem.init();
@@ -40,7 +37,7 @@ export default class GameControllerBehaviour extends cc.Component {
 
     stopEcs() {
         this.isStartEcs = false;
-        ecs.context.clear();
+        ecs.clear();
     }
 
     update(dt: number) {

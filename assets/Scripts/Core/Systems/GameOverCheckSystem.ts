@@ -14,12 +14,12 @@ export class GameOverCheckSystem extends ecs.ExecuteSystem<EntityX> {
     playerGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.starGroup = ecs.context.createGroup(ecs.Matcher.allOf(StarComponent, NodeComponent));
-        this.playerGroup = ecs.context.createGroup(ecs.Matcher.allOf(NodeComponent, JumpComponent, AccSwitchComponent));
+        this.starGroup = ecs.createGroup(ecs.allOf(StarComponent, NodeComponent));
+        this.playerGroup = ecs.createGroup(ecs.allOf(NodeComponent, JumpComponent, AccSwitchComponent));
     }
 
-    filter(): ecs.Matcher {
-        return ecs.Matcher.onlyOf(GameOverCountdownComponent);
+    filter(): ecs.IMatcher {
+        return ecs.onlyOf(GameOverCountdownComponent);
     }
 
     update(entities: EntityX[]): void {

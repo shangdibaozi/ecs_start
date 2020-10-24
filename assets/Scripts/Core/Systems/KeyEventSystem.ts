@@ -8,11 +8,11 @@ export class KeyEventSystem extends ecs.ExecuteSystem<EntityX> {
     playerGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.playerGroup = ecs.context.createGroup(ecs.Matcher.allOf(AccSwitchComponent));
+        this.playerGroup = ecs.createGroup(ecs.allOf(AccSwitchComponent));
     }
 
-    filter(): ecs.Matcher {
-        return ecs.Matcher.allOf(KeyEventComponent);
+    filter(): ecs.IMatcher {
+        return ecs.allOf(KeyEventComponent);
     }
 
     update(entities: EntityX[]): void {

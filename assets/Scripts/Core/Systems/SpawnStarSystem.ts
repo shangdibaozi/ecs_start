@@ -13,11 +13,11 @@ export class SpawnStarSystem extends ecs.AutoDestroyEntityReactiveSystem<EntityX
     playerGroup: ecs.Group<EntityX> = null;
 
     init() {
-        this.playerGroup = ecs.context.createGroup(ecs.Matcher.allOf(NodeComponent, JumpComponent));
+        this.playerGroup = ecs.createGroup(ecs.allOf(NodeComponent, JumpComponent));
     }
 
-    filter(): ecs.Matcher {
-        return ecs.Matcher.allOf(SpawnStarComponent);
+    filter(): ecs.IMatcher {
+        return ecs.allOf(SpawnStarComponent);
     }
 
     update(entities: EntityX[]): void {
@@ -26,7 +26,7 @@ export class SpawnStarSystem extends ecs.AutoDestroyEntityReactiveSystem<EntityX
             newStar.parent = Global.starLayer;
             newStar.setPosition(this.getNewStarPosition(this.playerGroup.entity));
 
-            let starEntity = ecs.context.createEntity();
+            let starEntity = ecs.createEntity();
             starEntity.add(StarComponent);
             starEntity.add(NodeComponent).node = newStar;
             
